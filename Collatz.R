@@ -29,21 +29,31 @@ if(!file.exists("Collatz_Output.txt")){
 }
 
 
-#how many numbers should be added to the Output file; IMPORTANT
+#how many numbers should be added to the Output file;
+#NA for start and end lets the scripts start at 1
+#number_end is included in the output
 turns <- 1000
-
+number_start <- NA
+number_end <- NA
 
 #define range
 last_value <- ReadLastLines("Collatz_Output.txt",1)[1]
 last_value <- strsplit(last_value, ",")[[1]][1]
 last_value <- as.numeric(strsplit(last_value, ",")[[1]][1])
 
-if(is.na(last_value)){
+if(!is.na(number_start)){
+  minnumber <- number_start
+} else if (is.na(last_value)){
   minnumber <- 1
 } else {
   minnumber <- last_value + 1
 }
-maxnumber <- minnumber + turns
+
+if(!is.na(number_end)){
+  maxnumber <- number_end + 1 #1 is necessary for correct turns
+} else{
+  maxnumber <- minnumber + turns
+}
 
 
 #run Collatz function the defined amount of turns
